@@ -62,21 +62,10 @@ console.log('------------Problem#2-------------')
 const two = ["foo(bar)", "(bar)", "foo(bar)blim", "foo(foo(bar))blim"];
 
 function testTwoRemoveP(item) {
-  let nestedWord = trimParenthesis(item);
-
-  if (nestedWord.indexOf("(") !== -1) {
-    nestedWord = testTwoRemoveP(nestedWord);
-  } else {
-    nestedWord = item.replace(
-      "(" + nestedWord + ")",
-      removeAndReverse(nestedWord)
-    );
-  }
   let replaceWord = item.replace(
     "(" + trimParenthesis(item) + ")",
     removeAndReverse(trimParenthesis(item))
   );
-
   if (replaceWord.indexOf("(") >= 0) {
     return testTwoRemoveP(replaceWord);
   }
