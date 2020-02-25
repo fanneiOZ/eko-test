@@ -1,3 +1,4 @@
+console.log('------------Problem#1-------------')
 const one = [
   "AMOR",
   "XISELA",
@@ -57,18 +58,48 @@ result.forEach(element => {
   console.log(list.join(" - "));
 });
 
+console.log('------------Problem#2-------------')
+const two = ["foo(bar)", "(bar)", "foo(bar)blim", "foo(foo(bar))blim"];
 
+function testTwoRemoveP(item) {
+  let nestedWord = trimParenthesis(item);
 
-// const two = ['foo(bar)'];
-// // ,'(bar)','foo(bar)blim','foo(foo(bar))blim'];
+  if (nestedWord.indexOf("(") !== -1) {
+    nestedWord = testTwoRemoveP(nestedWord);
+  } else {
+    nestedWord = item.replace(
+      "(" + nestedWord + ")",
+      removeAndReverse(nestedWord)
+    );
+  }
+  let replaceWord = item.replace(
+    "(" + trimParenthesis(item) + ")",
+    removeAndReverse(trimParenthesis(item))
+  );
 
-// function testTwoRemoveP(item) {
-//   const length = item.length();
-//   const firstOpenP = item.indexOf("\(");
-//   const lastOpenP = length - Array.from(item.split('')).reverse().join('').indexOf(")");
-  
-//   return {firstOpenP, lastOpenP};
-// }
+  if (replaceWord.indexOf("(") >= 0) {
+    return testTwoRemoveP(replaceWord);
+  }
+  return replaceWord;
+}
 
+function trimParenthesis(word) {
+  const firstOpenP = word.indexOf("(");
+  const lastOpenP = word.lastIndexOf(")");
+  let nestedWord = word.substr(firstOpenP + 1, lastOpenP - firstOpenP - 1);
+  if (nestedWord.indexOf("(") === -1) {
+    return nestedWord;
+  } else {
+    return trimParenthesis(nestedWord);
+  }
+}
+function removeAndReverse(word) {
+  return word
+    .split("")
+    .reverse()
+    .join("");
+}
 
-// two.forEach(element => console.log(testTwoRemoveP(element)));
+two.forEach(element =>
+  console.log(element + ' => ' + testTwoRemoveP(element))
+);
