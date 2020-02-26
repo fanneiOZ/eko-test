@@ -17,6 +17,8 @@ const one = [
   "ALEXIS"
 ];
 
+
+
 function testOneGroupingString(list) {
   var sortedItem = Array.from(list).map(element => {
     return {
@@ -57,6 +59,27 @@ result.forEach(element => {
   const list = Array.from(element.list);
   console.log(list.join(" - "));
 });
+
+
+resultSecondTry = one.reduce((element, carry) => {
+  if (carry === undefined) {
+    carry = [].push([element]);
+  } else {
+    let bufferCarry = [];
+    for (let group in carry) {
+      bufferCarry = [];
+      if (carry[group][0].split('').sort().join('') === element.split('').sort().join('')) {
+        carry[group].push(element);
+      } else {
+        bufferCarry = carry.push([element]);
+      }
+    }
+    carry = bufferCarry === [] ? carry : bufferCarry;
+  }
+  return carry;
+});
+console.log(resultSecondTry);
+//resultSecondTry.forEach(group => console.log(group.join(' - ')));
 
 console.log('------------Problem#2-------------')
 const two = ["foo(bar)", "(bar)", "foo(bar)blim", "foo(foo(bar))blim"];
